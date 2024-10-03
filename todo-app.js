@@ -19,6 +19,8 @@
     buttonWrapper.classList.add('input-group-append');
     button.classList.add('btn', 'btn-primary');
     button.textContent = 'Добавить дело';
+    // устанавливаем атрибут disabled для кнопки
+    button.setAttribute('disabled', true);
 
     buttonWrapper.append(button);
     form.append(input);
@@ -81,6 +83,11 @@
     container.append(todoItemForm.form);
     container.append(todoList);
 
+    // проверяем поле ввода в форме, если пустое - оставляем disabled=true, в ином случае меняем на false
+    todoItemForm.form.addEventListener('input', function () {
+      todoItemForm.button.disabled = !todoItemForm.input.value;
+    });
+
     // браузер создает событие submit на форме по нажатию на Enter или на кнопку создание дела
     todoItemForm.form.addEventListener('submit', function(e) {
       // эта строчка необходима, чтобы предотвратить стандартное действие браузера
@@ -109,6 +116,8 @@
 
       // обнуляем значение в поле, чтобы не пришлось стирать его вручную
       todoItemForm.input.value = '';
+      // делаем кнопку неактивной
+      todoItemForm.button.disabled = true;
     });
   }
 
